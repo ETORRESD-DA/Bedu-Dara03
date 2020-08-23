@@ -8,12 +8,11 @@ URL_BASE='https://api.github.com/'
 # FUNTIONS
 def get_github_user(username):
     url = f'{URL_BASE}users/{username}'
-    print(url)
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
-    print("Sin conexion ",response.status_code)
     return None
+
 
 def download_followers(followers_url):
     response = requests.get(followers_url)
@@ -36,16 +35,23 @@ def download_user_avatar(image_url):
     return None
 
 
+
+
+
 def image_filename():
     now = datetime.now()
     timestamp = datetime.timestamp(now)
     return timestamp
 
-user = get_github_user("ETORRESD-DA")
-print(user)
+
+
+#username = input('Give the username:\t')
+user = get_github_user("galileoguzman")
+
 if user:
     user_followers_url = user.get("followers_url")
-    download_followers(user_fsollowers_url)
+    download_followers(user_followers_url)
+
     f = open("tmp/base.json", "r")
     content = f.read()
     jsondecoded = json.loads(content)
@@ -55,6 +61,3 @@ if user:
         download_user_avatar(user_avatar_url)
 else:
     print('User not found')
-
-
-
