@@ -41,11 +41,11 @@ def image_filename():
     timestamp = datetime.timestamp(now)
     return timestamp
 
-user = get_github_user("ETORRESD-DA")
-print(user)
+user = get_github_user("galileoguzman")
+
 if user:
     user_followers_url = user.get("followers_url")
-    download_followers(user_fsollowers_url)
+    download_followers(user_followers_url)
     f = open("tmp/base.json", "r")
     content = f.read()
     jsondecoded = json.loads(content)
