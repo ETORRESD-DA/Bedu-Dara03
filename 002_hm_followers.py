@@ -25,11 +25,11 @@ def download_followers(followers_url):
             return filename
     return None
 
-def download_user_avatar(image_url):
-    response = requests.get(image_url)
+def download_user_avatar(image_url,login):
+    response = requests.get(image_url,login)
     if response.status_code == 200:
         response_content = response.content
-        filename = f'tmp/{image_filename()}.png'
+        filename = f'tmp/{image_filename()}{login}.png'
         with open(filename, 'wb') as image:
             image.write(response_content)
             return filename
@@ -52,7 +52,8 @@ if user:
     for elemento in jsondecoded:
         follower=get_github_user (elemento['login'])   
         user_avatar_url = follower.get('avatar_url')
-        download_user_avatar(user_avatar_url)
+        user_avatar_name=follower.get('login')
+        download_user_avatar(user_avatar_url,user_avatar_name)
 else:
     print('User not found')
 
